@@ -4,9 +4,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cup" viewBox="0 0 16 16">
         <path d="M11 0h-6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 1h6a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
       </svg>
-      Bienvenue sur RecetteApp!
+      {{ $t('welcome_title') }}
     </h1>
-    <p class="lead text-dark mb-4">Découvrez, ajoutez et gérez vos recettes préférées avec une touche de fraîcheur et d'énergie.</p>
+    <p class="lead text-dark mb-4">{{ $t('welcome_description') }}</p>
 
     <!-- Carousel d'images -->
     <div id="recipeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
@@ -26,18 +26,19 @@
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Précédent</span>
+        <span class="visually-hidden">{{ $t('carousel_previous') }}</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Suivant</span>
+        <span class="visually-hidden">{{ $t('carousel_next') }}</span>
       </button>
     </div>
 
-    <router-link to="/add-recipe" class="btn btn-warning btn-lg mx-2">Ajouter une Recette</router-link>
-    <router-link to="/recipe-list" class="btn btn-success btn-lg mx-2">Voir Liste des Recettes</router-link>
+    <router-link to="/add-recipe" class="btn btn-warning btn-lg mx-2">{{ $t('add_recipe') }}</router-link>
+    <router-link to="/recipe-list" class="btn btn-success btn-lg mx-2">{{ $t('view_recipe_list') }}</router-link>
   </div>
 </template>
+
 
 <script>
 export default {

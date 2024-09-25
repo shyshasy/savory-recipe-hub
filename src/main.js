@@ -2,35 +2,25 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { createPinia } from 'pinia';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importez les styles de Bootstrap
-import 'bootstrap'; // Importez les composants JavaScript de Bootstrap si nécess
-
 import { createI18n } from 'vue-i18n';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 
-const messages = {
-  en: {
-    welcome: 'Welcome',
-    hello: 'Hello World!',
-    goodbye: 'Goodbye',
-  },
-  fr: {
-    welcome: 'Bienvenue',
-    hello: 'Bonjour le monde !',
-    goodbye: 'Au revoir',
-  },
-};
+import en from './locales/en.json';
+import fr from './locales/fr.json';
 
 const i18n = createI18n({
-  locale: 'en', 
+  locale: 'fr', 
   fallbackLocale: 'en', 
-  messages, 
+  messages: {
+    en,
+    fr
+  }
 });
-
-export default i18n;
-
 
 const app = createApp(App);
 
 app.use(router);
 app.use(createPinia());
+app.use(i18n);
 app.mount('#app');

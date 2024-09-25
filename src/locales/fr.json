@@ -1,0 +1,22 @@
+{
+    "add_recipe": "Ajouter une Recette",
+    "title": "Titre",
+    "ingredients": "Ingrédients",
+    "type": "Type",
+    "choose_type": "Choisir un type",
+    "starter": "Entrée",
+    "main": "Plat",
+    "dessert": "Dessert",
+    "submit": "Ajouter",
+    "success_message": "Recette ajoutée avec succès !",
+    "editRecipe": "modifier recette",
+    "editButton": "modifier",
+    "home": "Acceuil",
+    "RecetteApp": "Application de recette",
+    "welcome_title": "Bienvenue sur RecetteApp!",
+    "welcome_description": "Découvrez, ajoutez et gérez vos recettes préférées avec une touche de fraîcheur et d'énergie.",
+    "carousel_previous": "Précédent",
+    "carousel_next": "Suivant",
+    "view_recipe_list": "Voir Liste des Recettes",
+    "recipe_list": "List Des Recette"
+}
