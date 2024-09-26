@@ -26,7 +26,6 @@
       </div>
       <button type="submit" class="btn btn-primary btn-lg mt-3">{{ $t('submit') }}</button>
     </form>
-    <!-- Affichage du message de succès -->
     <div v-if="successMessage" class="alert alert-success mt-3">
       {{ $t('success_message') }}
     </div>
@@ -56,8 +55,8 @@ export default {
         successMessage.value = true;
         setTimeout(() => {
           router.push({ name: 'recipe-list' });
-        }, 1500); // Redirection après 1,5 seconde
-        recipe.value = { title: '', ingredients: '', type: '' }; // Réinitialiser les champs du formulaire
+        }, 1500); 
+        recipe.value = { title: '', ingredients: '', type: '' }; 
       }
     }
 

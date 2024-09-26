@@ -4,15 +4,15 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
         <path d="M3.5 8a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm-9-4a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zM1 5.5A.5.5 0 0 1 1.5 5h13a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5v-.5zM1 10.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5v-.5z"/>
       </svg>
-      Liste des Recettes
+      {{ $t('recipe_list_title') }}
     </h2>
     <ul class="list-group">
       <li v-for="recipe in recipes" :key="recipe.id" class="list-group-item d-flex justify-content-between align-items-center">
         <span>{{ recipe.title }}</span>
         <div>
-          <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }" class="btn btn-custom btn-info btn-sm mx-1">Détails</router-link>
-          <router-link :to="{ name: 'edit-recipe', params: { id: recipe.id } }" class="btn btn-custom btn-warning btn-sm mx-1">Modifier</router-link>
-          <button @click="handleDeleteRecipe(recipe.id)" class="btn btn-custom btn-danger btn-sm mx-1">Supprimer</button>
+          <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }" class="btn btn-custom btn-info btn-sm mx-1">{{ $t('details') }}</router-link>
+          <router-link :to="{ name: 'edit-recipe', params: { id: recipe.id } }" class="btn btn-custom btn-warning btn-sm mx-1">{{ $t('edit') }}</router-link>
+          <button @click="handleDeleteRecipe(recipe.id)" class="btn btn-custom btn-danger btn-sm mx-1">{{ $t('delete') }}</button>
         </div>
       </li>
     </ul>
