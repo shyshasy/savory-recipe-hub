@@ -1,8 +1,6 @@
 <template>
   <div>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom border-warning border-3"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom border-warning border-3">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">{{ $t("RecetteApp") }}</a>
         <button
@@ -22,14 +20,13 @@
               <router-link class="nav-link" to="/">{{ $t("home") }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/add-recipe">{{
-                $t("add_recipe")
-              }}</router-link>
+              <router-link class="nav-link" to="/add-recipe">{{ $t("add_recipe") }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/recipe-list">{{
-                $t("recipe_list")
-              }}</router-link>
+              <router-link class="nav-link" to="/recipe-list">{{ $t("recipe_list") }}</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/category-list">{{ $t("category_list") }}</router-link>
             </li>
           </ul>
 

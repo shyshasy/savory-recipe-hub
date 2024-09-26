@@ -4,18 +4,22 @@ import AddRecipe from '../components/AddRecipe.vue';
 import RecipeList from '../components/RecipeList.vue';
 import RecipeDetails from '../components/RecipeDetails.vue';
 import EditRecipe from '../components/EditRecipe.vue'; 
+// import AddCategory from '../components/AddCategory.vue'; // Correction du nom de l'import
+import CategoryList from '../components/CategoryList.vue'; // Correction du nom de l'import
 
 const routes = [
   { path: '/', component: Home, name: 'home' },
   { path: '/add-recipe', component: AddRecipe, name: 'add-recipe' },
   { path: '/recipe-list', component: RecipeList, name: 'recipe-list' },
   { path: '/recipe-details/:id', component: RecipeDetails, name: 'recipe-details', props: true },
-  { path: '/edit-recipe/:id', component: EditRecipe, name: 'edit-recipe', props: true }
+  { path: '/edit-recipe/:id', component: EditRecipe, name: 'edit-recipe', props: true },
+  // { path: '/add-category', component: AddCategory, name: 'add-category' }, // Ajout de la virgule après la route
+  { path: '/category-list', component: CategoryList, name: 'category-list' }, // Correction du chemin et ajout de la virgule
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;
