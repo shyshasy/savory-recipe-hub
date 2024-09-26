@@ -19,9 +19,9 @@
     "carousel_next": "Next",
     "view_recipe_list": "View Recipe List",
     "recipe_list_title": "Recipe List",
-  "details": "Details",
-  "edit": "Edit",
-  "delete": "Delete",
-  "confirm_delete": "Are you sure you want to delete this recipe?",
-  "delete_success": "Recipe deleted successfully"
+    "details": "Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm_delete": "Are you sure you want to delete this recipe?",
+    "delete_success": "Recipe deleted successfully"
 }
