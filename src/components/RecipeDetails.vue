@@ -10,6 +10,7 @@
       <h3>{{ recipe.title }}</h3>
       <p><strong>Ingrédients:</strong> {{ recipe.ingredients }}</p>
       <p><strong>Type:</strong> {{ recipe.type }}</p>
+      <p><strong>Catégorie:</strong> {{ recipe.category }}</p> <!-- Ajout de la catégorie -->
     </div>
     <router-link to="/recipe-list" class="btn btn-secondary btn-lg mt-3">Retour à la Liste</router-link>
   </div>

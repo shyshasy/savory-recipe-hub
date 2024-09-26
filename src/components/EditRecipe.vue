@@ -24,6 +24,17 @@
           <option>{{ $t('dessert') }}</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="category">{{ $t('category') }}</label>
+        <select v-model="recipe.category" class="form-control form-control-lg" id="category" required>
+          <option value="" disabled>{{ $t('selectCategory') }}</option>
+          <option>Végétarien</option>
+          <option>Vegan</option>
+          <option>Sans gluten</option>
+          <option>Épicé</option>
+          <option>Douceur</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary btn-lg mt-3">{{ $t('editButton') }}</button>
     </form>
     <p v-if="successMessage" class="mt-3 alert alert-success">{{ $t('successMessage') }}</p>
@@ -44,7 +55,8 @@ export default {
     const recipe = ref({
       title: '',
       ingredients: '',
-      type: ''
+      type: '',
+      category: '' // Ajouter la propriété de catégorie
     });
     const successMessage = ref('');
 
@@ -57,7 +69,7 @@ export default {
     });
 
     function handleEditRecipe() {
-      if (recipe.value.title && recipe.value.ingredients && recipe.value.type) {
+      if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.category) {
         recipeStore.recipes = recipeStore.recipes.map(r => r.id === recipe.value.id ? { ...recipe.value } : r);
         successMessage.value = 'successMessage'; // Utilisez la clé pour le message
         setTimeout(() => {

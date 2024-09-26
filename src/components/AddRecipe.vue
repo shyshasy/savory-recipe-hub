@@ -24,6 +24,17 @@
           <option>Dessert</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="category">Catégorie</label>
+        <select v-model="recipe.category" class="form-control form-control-lg" id="category" required>
+          <option value="" disabled>Choisir une catégorie</option>
+          <option>Végétarien</option>
+          <option>Vegan</option>
+          <option>Sans gluten</option>
+          <option>Épicé</option>
+          <option>Douceur</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary btn-lg mt-3">Ajouter</button>
     </form>
     <!-- Affichage du message de succès -->
@@ -32,7 +43,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref } from 'vue';
 import { useRecipeStore } from '../stores/recipeStore';
@@ -46,18 +56,19 @@ export default {
     const recipe = ref({
       title: '',
       ingredients: '',
-      type: ''
+      type: '',
+      category: '' // Ajout de la catégorie
     });
     const successMessage = ref('');
 
     function handleAddRecipe() {
-      if (recipe.value.title && recipe.value.ingredients && recipe.value.type) {
+      if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.category) {
         recipeStore.addRecipe({ ...recipe.value, id: Date.now() });
         successMessage.value = 'Recette ajoutée avec succès !';
         setTimeout(() => {
           router.push({ name: 'recipe-list' });
         }, 1500); // Redirection après 1,5 seconde
-        recipe.value = { title: '', ingredients: '', type: '' }; // Réinitialiser les champs du formulaire
+        recipe.value = { title: '', ingredients: '', type: '', category: '' }; // Réinitialiser les champs du formulaire
       }
     }
 
@@ -65,7 +76,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* Le style spécifique est vide pour ce cas */
-</style>
