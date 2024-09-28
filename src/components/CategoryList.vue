@@ -1,76 +1,126 @@
 <template>
-  <div class="container mt-5">
-    <h2 class="text-primary mb-4">{{ $t('category_list_title') }}</h2>
+  <div class="category-list-container">
+    <h2>Liste des Catégories</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom de la Catégorie</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="category in categories" :key="category.categorie_id">
+          <td>{{ category.categorie_id }}</td>
+          <td>{{ category.title }}</td>
+          <td>
+            <button @click="editCategory(category)" class="btn btn">
+              <i class="fas fa-edit" style="color: green"></i>
+            </button>
+            <button @click="deleteCategory(category.categorie_id)" class="btn btn-custom" title="Supprimer">
+              <i class="fas fa-trash" style="color: red"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="mb-4">
-      <input v-model="newCategory" class="form-control" placeholder="Ajouter une nouvelle catégorie" />
-      <button @click="handleAddCategory" class="btn btn-custom mt-2">{{ $t('add') }}</button>
-    </div>
-
-    <ul class="list-group">
-      <li v-for="(category, index) in categories" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
-        <span v-if="!editingCategory || editingIndex !== index">{{ category }}</span>
-        <input v-else v-model="editedCategory" class="form-control form-control-sm" />
-
-        <div class="button-group">
-          <button v-if="editingCategory && editingIndex === index" @click="handleSaveCategory(index)" class="btn btn-custom btn-save">{{ $t('save') }}</button>
-          <button v-if="editingCategory && editingIndex === index" @click="handleCancelEdit" class="btn btn-custom btn-cancel">{{ $t('cancel') }}</button>
-          <button v-if="!editingCategory" @click="handleEditCategory(index, category)" class="btn btn-custom btn-edit">{{ $t('edit') }}</button>
-          <button @click="handleDeleteCategory(index)" class="btn btn-custom btn-delete">{{ $t('delete') }}</button>
+    <div class="add-category-container">
+      <h2>{{ isEditing ? 'Modifier la catégorie' : 'Ajouter une nouvelle catégorie' }}</h2>
+      <form @submit.prevent="isEditing ? handleUpdateCategory() : handleAddCategory()">
+        <div class="form-group">
+          <label for="categoryName">Nom de la Catégorie :</label>
+          <input v-model="newCategory.title" type="text" id="categoryName" class="form-control" placeholder="Entrez le nom de la catégorie" required />
         </div>
-      </li>
-    </ul>
-
-    <div v-if="successMessage" class="mt-4 alert alert-success">{{ successMessage }}</div>
+        <button type="submit" class="btn" :class="isEditing ? 'btn-success' : 'btn-primary'">
+          {{ isEditing ? 'Modifier la catégorie' : 'Ajouter la catégorie' }}
+        </button>
+        <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+        <button type="button" v-if="isEditing" class="btn btn-secondary" @click="cancelEdit">Annuler</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useCategoryStore } from '../stores/categoryStore';
+import { ref, onMounted } from 'vue';
+import { useCategoryStore } from '../stores/categoryStore'; 
 
 const categoryStore = useCategoryStore();
-const newCategory = ref('');
-const editingCategory = ref(false);
-const editedCategory = ref('');
-const editingIndex = ref(-1);
+const categories = ref([]); // Variable pour stocker les catégories
+const newCategory = ref({ title: '' });
 const successMessage = ref('');
+const errorMessage = ref('');
+const isEditing = ref(false); // Pour gérer l'état d'édition
+const editingCategoryId = ref(null); // ID de la catégorie en cours d'édition
 
-const categories = computed(() => categoryStore.categories);
+const fetchCategories = async () => {
+  await categoryStore.fetchCategories(); // Récupérer les catégories
+  categories.value = categoryStore.categories; // Mettre à jour la liste des catégories
+};
 
-onMounted(async () => {
-  await categoryStore.fetchCategories();
-});
+const handleAddCategory = async () => {
+  try {
+    await categoryStore.addCategory(newCategory.value);
+    successMessage.value = 'Catégorie ajoutée avec succès!';
+    errorMessage.value = '';
+    resetForm();
+    await fetchCategories(); // Mettre à jour la liste des catégories
+  } catch (error) {
+    errorMessage.value = 'Erreur lors de l\'ajout de la catégorie.';
+    successMessage.value = '';
+  }
+};
 
-function handleAddCategory() {
-  // Ajoutez ici votre logique pour ajouter une catégorie
-}
+const editCategory = (category) => {
+  newCategory.value = { ...category }; // Charger les données dans le formulaire
+  isEditing.value = true; // Passer en mode édition
+  editingCategoryId.value = category.categorie_id; // Stocker l'ID pour mise à jour
+};
 
-function handleEditCategory(index, category) {
-  // Ajoutez ici votre logique pour éditer une catégorie
-}
+const handleUpdateCategory = async () => {
+  try {
+    await categoryStore.updateCategory(editingCategoryId.value, newCategory.value);
+    successMessage.value = 'Catégorie modifiée avec succès!';
+    errorMessage.value = '';
+    resetForm();
+    await fetchCategories(); // Mettre à jour la liste des catégories
+  } catch (error) {
+    errorMessage.value = 'Erreur lors de la mise à jour de la catégorie.';
+    successMessage.value = '';
+  }
+};
 
-function handleSaveCategory(index) {
-  // Ajoutez ici votre logique pour sauvegarder une catégorie
-}
+const deleteCategory = async (id) => {
+  if (confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')) {
+    try {
+      await categoryStore.deleteCategory(id);
+      successMessage.value = 'Catégorie supprimée avec succès!';
+      errorMessage.value = '';
+      await fetchCategories(); // Récupérer à nouveau les catégories après la suppression
+    } catch (error) {
+      errorMessage.value = 'Erreur lors de la suppression de la catégorie.';
+      successMessage.value = '';
+    }
+  }
+};
 
-function handleCancelEdit() {
-  // Ajoutez ici votre logique pour annuler l'édition
-}
+const cancelEdit = () => {
+  resetForm();
+};
 
-function handleDeleteCategory(index) {
-  // Ajoutez ici votre logique pour supprimer une catégorie
-}
+// Méthode pour réinitialiser le formulaire
+const resetForm = () => {
+  newCategory.value = { title: '' }; // Réinitialiser le formulaire
+  isEditing.value = false; // Quitter le mode édition
+  editingCategoryId.value = null; // Réinitialiser l'ID d'édition
+};
+
+// Charger les catégories au montage du composant
+onMounted(fetchCategories);
 </script>
 
 <style scoped>
-/* Styles ici (identiques à ce que vous avez déjà) */
-.container {
-  background-color: #f5f5f5; /* Lighter background for modern look */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
-}
-
-/* Ajoutez vos styles ici */
+/* Vos styles ici */
 </style>

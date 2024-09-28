@@ -28,9 +28,9 @@
         <label for="category">Catégorie :</label>
         <select v-model="recipe.id_categorie" id="category" class="form-control" required>
           <option value="" disabled>Choisissez une catégorie</option>
-          <option value="1">Dessert</option>
-          <option value="2">Plat principal</option>
-          <option value="3">Entrée</option>
+          <option v-for="category in categories" :key="category.categorie_id" :value="category.categorie_id">
+            {{ category.title }} <!-- Assurez-vous que 'nom' correspond à la propriété de votre catégorie -->
+          </option>
         </select>
       </div>
 
@@ -43,34 +43,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRecipeStore } from '../stores/recipeStore';
+import { useCategoryStore } from '../stores/categoryStore'; // Importer le store des catégories
 import { useRouter } from 'vue-router';
 
 const recipeStore = useRecipeStore();
+const categoryStore = useCategoryStore(); // Créer une instance du store des catégories
 const router = useRouter();
 
 const recipe = ref({
   title: '',
   ingredients: '',
   type: '',
-  id_categorie: '' // Champ lié à la sélection de catégorie
+  id_categorie: ''
 });
+
 const successMessage = ref('');
 const errorMessage = ref('');
+const categories = ref([]); // Déclaration d'une variable pour stocker les catégories
+
+const fetchCategories = async () => {
+  await categoryStore.fetchCategories(); // Récupérer les catégories
+  categories.value = categoryStore.categories; // Mettre à jour la liste des catégories
+};
 
 const handleAddRecipe = () => {
   if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.id_categorie) {
-    const recipeToSubmit = { ...recipe.value }; // Convertir en objet simple
-    console.log("Données à envoyer à l'API :", recipeToSubmit); // Log pour debug
+    const recipeToSubmit = { ...recipe.value };
+    console.log("Données à envoyer à l'API :", recipeToSubmit);
     recipeStore.addRecipe(recipeToSubmit)
       .then(() => {
         successMessage.value = 'Recette ajoutée avec succès !';
-        errorMessage.value = ''; // Réinitialiser le message d'erreur
+        errorMessage.value = '';
         setTimeout(() => {
-          router.push({ name: 'recipe-list' }); // Redirection après 1.5s
+          router.push({ name: 'recipe-list' });
         }, 1500);
-        recipe.value = { title: '', ingredients: '', type: '', id_categorie: '' }; // Réinitialisation des champs
+        recipe.value = { title: '', ingredients: '', type: '', id_categorie: '' };
       })
       .catch((error) => {
         if (error.response) {
@@ -88,6 +97,9 @@ const handleAddRecipe = () => {
     errorMessage.value = 'Veuillez remplir tous les champs obligatoires.';
   }
 };
+
+// Charger les catégories au montage du composant
+onMounted(fetchCategories);
 </script>
 
 <style scoped>

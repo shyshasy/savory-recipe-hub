@@ -6,6 +6,7 @@ import { createI18n } from 'vue-i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
+
 import en from './locales/en.json';
 import fr from './locales/fr.json';
 
