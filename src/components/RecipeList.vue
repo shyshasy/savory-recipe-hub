@@ -30,10 +30,10 @@
               <i class="bi bi-eye"></i>
             </router-link>
             <router-link :to="{ name: 'edit-recipe', params: { id: recipe.id } }" class="btn btn-custom" title="Modifier">
-              <i class="bi bi-pencil"></i>
+              <i class="fas fa-edit" style="color: green"></i>
             </router-link>
-            <button @click="handleDeleteRecipe(recipe.id)" class="btn btn-custom btn-danger" title="Supprimer">
-              <i class="bi bi-trash"></i>
+            <button @click="handleDeleteRecipe(recipe.id)" class="btn btn-custom" title="Supprimer">
+              <i class="fas fa-trash" style="color: red"></i>
             </button>
           </td>
         </tr>
