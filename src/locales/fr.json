@@ -14,7 +14,7 @@
     "home": "Acceuil",
     "RecetteApp": "Application de recette",
     "welcome_title": "Bienvenue sur RecetteApp!",
-    "welcome_description": "Découvrez, ajoutez et gérez vos recettes préférées avec une touche de fraîcheur et d'énergie.",
+    "welcome_description": "Découvrez, vos recettes préférées avec une touche de fraîcheur et d'énergie.",
     "carousel_previous": "Précédent",
     "carousel_next": "Suivant",
     "view_recipe_list": "Voir Liste des Recettes",
@@ -24,5 +24,9 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "confirm_delete": "Êtes-vous sûr de vouloir supprimer cette recette ?",
-    "delete_success": "Recette supprimée avec succès"
+    "delete_success": "Recette supprimée avec succès",
+    "category_list": "List Des Categories",
+    "category_name": "Nom de la Categorie",
+    "ajout_recette": "Ajouter une nouvelle recette",
+    "charge_recip": "Chargement des recette..."
 }

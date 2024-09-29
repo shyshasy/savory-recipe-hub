@@ -8,7 +8,6 @@
     </h1>
     <p class="lead text-dark mb-4">{{ $t('welcome_description') }}</p>
 
-    <!-- Carousel d'images -->
     <div id="recipeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -39,7 +38,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'Home',
@@ -47,22 +45,39 @@ export default {
 </script>
 
 <style scoped>
-/* Augmentation de la taille des images tout en maintenant l'affichage complet du contenu */
+.container {
+  background-color: #f0f8ff; /* Couleur de fond douce */
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre plus douce */
+}
+
 .recipe-img {
-  height: 300px; /* Augmentation de la hauteur à 300px */
-  object-fit: contain; /* Assure que toute l'image est visible sans être coupée */
+  height: 300px; 
+  object-fit: cover; /* Changement de `contain` à `cover` pour remplir l'espace */
   width: 100%;
-  border-radius: 12px; /* Bordures arrondies pour un style esthétique */
-  background-color: #f8f9fa; /* Ajoute un fond pour les images de tailles variables */
+  border-radius: 12px; 
+  background-color: #f8f9fa; 
+  transition: transform 0.3s ease; /* Effet de transition */
+}
+
+.recipe-img:hover {
+  transform: scale(1.05); /* Effet d'agrandissement au survol */
 }
 
 .carousel-inner {
-  max-height: 300px; /* Ajustement de la hauteur maximale du carousel */
+  max-height: 300px; 
 }
 
-/* Ajustement des contrôles de navigation */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   filter: invert(100%);
+}
+
+.btn {
+  transition: background-color 0.3s ease; /* Transition pour le changement de couleur */
+}
+
+.btn:hover {
+  opacity: 0.8; /* Réduction de l'opacité au survol */
 }
 </style>
