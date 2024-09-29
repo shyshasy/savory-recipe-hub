@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h2>Ajouter une nouvelle recette</h2>
+    <h2>{{ $t('ajout_recette') }}</h2>
 
     <form @submit.prevent="handleAddRecipe" class="recipe-form">
       <div class="form-group">
@@ -29,7 +29,7 @@
         <select v-model="recipe.id_categorie" id="category" class="form-control" required>
           <option value="" disabled>Choisissez une catégorie</option>
           <option v-for="category in categories" :key="category.categorie_id" :value="category.categorie_id">
-            {{ category.title }} <!-- Assurez-vous que 'nom' correspond à la propriété de votre catégorie -->
+            {{ category.title }} 
           </option>
         </select>
       </div>
@@ -45,11 +45,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRecipeStore } from '../stores/recipeStore';
-import { useCategoryStore } from '../stores/categoryStore'; // Importer le store des catégories
+import { useCategoryStore } from '../stores/categoryStore'; 
 import { useRouter } from 'vue-router';
 
 const recipeStore = useRecipeStore();
-const categoryStore = useCategoryStore(); // Créer une instance du store des catégories
+const categoryStore = useCategoryStore(); 
 const router = useRouter();
 
 const recipe = ref({
@@ -61,11 +61,11 @@ const recipe = ref({
 
 const successMessage = ref('');
 const errorMessage = ref('');
-const categories = ref([]); // Déclaration d'une variable pour stocker les catégories
+const categories = ref([]); 
 
 const fetchCategories = async () => {
-  await categoryStore.fetchCategories(); // Récupérer les catégories
-  categories.value = categoryStore.categories; // Mettre à jour la liste des catégories
+  await categoryStore.fetchCategories();
+  categories.value = categoryStore.categories;
 };
 
 const handleAddRecipe = () => {
@@ -98,12 +98,11 @@ const handleAddRecipe = () => {
   }
 };
 
-// Charger les catégories au montage du composant
+
 onMounted(fetchCategories);
 </script>
 
 <style scoped>
-/* Container du formulaire */
 .form-container {
   max-width: 500px;
   margin: 30px auto;
@@ -113,7 +112,6 @@ onMounted(fetchCategories);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Titre du formulaire */
 h2 {
   text-align: center;
   font-family: 'Arial', sans-serif;
@@ -122,12 +120,10 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Groupes de champs */
 .form-group {
   margin-bottom: 15px;
 }
 
-/* Labels */
 label {
   font-weight: bold;
   display: block;
@@ -135,7 +131,6 @@ label {
   color: #555;
 }
 
-/* Champs de formulaire */
 .form-control {
   width: 100%;
   padding: 10px;
@@ -151,7 +146,6 @@ label {
   outline: none;
 }
 
-/* Bouton de soumission */
 .btn {
   width: 100%;
   padding: 10px;
@@ -169,7 +163,6 @@ label {
   background-color: #0056b3;
 }
 
-/* Messages d'alerte */
 .alert {
   margin-top: 15px;
   padding: 10px;

@@ -5,12 +5,12 @@
     <form @submit.prevent="handleEditRecipe" class="recipe-form">
       <div class="form-group">
         <label for="title">{{ $t('title') }}</label>
-        <input v-model="recipe.title" type="text" id="title" class="form-control" placeholder="{{ $t('title') }}" required />
+        <input v-model="recipe.title" type="text" id="title" class="form-control" placeholder="title" required />
       </div>
 
       <div class="form-group">
         <label for="ingredients">{{ $t('ingredients') }}</label>
-        <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" rows="4" placeholder="{{ $t('ingredients') }}" required></textarea>
+        <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" rows="4" placeholder="ingredients" required></textarea>
       </div>
 
       <div class="form-group">
@@ -26,12 +26,10 @@
       <div class="form-group">
         <label for="category">{{ $t('category') }}</label>
         <select v-model="recipe.category" id="category" class="form-control" required>
-          <option value="" disabled>{{ $t('selectCategory') }}</option>
-          <option>Végétarien</option>
-          <option>Vegan</option>
-          <option>Sans gluten</option>
-          <option>Épicé</option>
-          <option>Douceur</option>
+          <option value="" disabled>Choisissez une catégorie</option>
+          <option v-for="category in categories" :key="category.categorie_id" :value="category.name">
+            {{ category.title }}
+          </option>
         </select>
       </div>
 
@@ -46,22 +44,32 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRecipeStore } from '../stores/recipeStore';
+import { useCategoryStore } from '../stores/categoryStore';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 const recipeStore = useRecipeStore();
+const categoryStore = useCategoryStore();
 const recipe = ref({
-  id: null, // Ajoutez un champ id pour stocker l'ID de la recette
+  id: null, 
   title: '',
   ingredients: '',
   type: '',
   category: ''
 });
+const categories = ref([]);
 const successMessage = ref('');
 const errorMessage = ref('');
 
-onMounted(() => {
+onMounted(async () => {
+  try {
+    await categoryStore.fetchCategories();
+    categories.value = categoryStore.categories;
+  } catch (error) {
+    errorMessage.value = 'Erreur lors du chargement des catégories.';
+  }
+
   const recipeId = route.params.id;
   const existingRecipe = recipeStore.getRecipeById(Number(recipeId));
   if (existingRecipe) {
@@ -74,11 +82,11 @@ onMounted(() => {
 async function handleEditRecipe() {
   if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.category) {
     try {
-      await recipeStore.updateRecipe(recipe.value); // Mettez à jour la recette via l'API
+      await recipeStore.updateRecipe(recipe.value); 
       successMessage.value = 'Recette mise à jour avec succès !';
-      errorMessage.value = ''; // Réinitialiser le message d'erreur
+      errorMessage.value = ''; 
       setTimeout(() => {
-        router.push({ name: 'recipe-list' }); // Redirection après 2 secondes
+        router.push({ name: 'recipe-list' }); 
       }, 2000);
     } catch (error) {
       errorMessage.value = 'Erreur lors de la mise à jour de la recette.';
@@ -89,9 +97,7 @@ async function handleEditRecipe() {
 }
 </script>
 
-
 <style scoped>
-/* Container du formulaire */
 .form-container {
   max-width: 500px;
   margin: 30px auto;
@@ -101,7 +107,6 @@ async function handleEditRecipe() {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Titre du formulaire */
 h2 {
   text-align: center;
   font-family: 'Arial', sans-serif;
@@ -110,12 +115,10 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Groupes de champs */
 .form-group {
   margin-bottom: 15px;
 }
 
-/* Labels */
 label {
   font-weight: bold;
   display: block;
@@ -123,7 +126,6 @@ label {
   color: #555;
 }
 
-/* Champs de formulaire */
 .form-control {
   width: 100%;
   padding: 10px;
@@ -139,7 +141,6 @@ label {
   outline: none;
 }
 
-/* Bouton de soumission */
 .btn {
   width: 100%;
   padding: 10px;
@@ -157,7 +158,6 @@ label {
   background-color: #0056b3;
 }
 
-/* Messages d'alerte */
 .alert {
   margin-top: 15px;
   padding: 10px;
