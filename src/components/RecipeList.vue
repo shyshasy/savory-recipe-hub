@@ -18,7 +18,7 @@
 
     <!-- Bouton pour ajouter une nouvelle recette -->
     <router-link to="/add-recipe" class="btn btn-primary mb-3">
-      <i class="bi bi-plus-circle"></i> Ajouter une recette
+      <i class="bi bi-plus-circle"></i> {{ $t('add_recipe') }}
     </router-link>
 
     <input

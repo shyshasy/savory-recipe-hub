@@ -28,6 +28,8 @@
      "category_name": "Category name",
      "ajout_recette": "Add new recipe",
      "recipe_list_title": "Recipe List",
-     "charge_recip": "Rcipes chargement..."
+     "charge_recip": "Rcipes chargement...",
+     "category_detail": "Category details",
+     "ajout_category": "add category"
     
 }

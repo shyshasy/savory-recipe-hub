@@ -1,11 +1,13 @@
 <template>
   <div class="category-list-container">
-    <!-- Formulaire pour ajouter/modifier une catégorie -->
-    <div class="add-category-container mb-4">
-      <h2>{{ isEditing ? 'Modifier la catégorie' : 'Ajouter une nouvelle catégorie' }}</h2>
+    <button v-if="!showForm && !isEditing" @click="showForm = true" class="btn btn-primary mb-4">
+      <i class="fas fa-plus-circle"></i> {{ $t('ajout_category') }}
+    </button>
+
+    <div v-if="showForm" class="add-category-container mb-4">
       <form @submit.prevent="isEditing ? handleUpdateCategory() : handleAddCategory()">
         <div class="form-group">
-          <label for="categoryName">Nom de la Catégorie :</label>
+          <label for="categoryName">{{$t('category_name')}}</label>
           <input 
             v-model="newCategory.title" 
             type="text" 
@@ -15,7 +17,7 @@
             required 
           />
         </div>
-        <!-- Messages d'erreur et de succès avec transitions améliorées -->
+
         <transition name="fade">
           <div v-if="errorMessage" class="alert alert-danger">
             <i class="fas fa-exclamation-triangle"></i> {{ errorMessage }}
@@ -26,7 +28,7 @@
             <i class="fas fa-check-circle"></i> {{ successMessage }}
           </div>
         </transition>
-        <!-- Boutons -->
+
         <div class="form-actions d-flex justify-content-between">
           <button type="submit" class="btn" :class="isEditing ? 'btn-success' : 'btn-primary'">
             <i :class="isEditing ? 'fas fa-edit' : 'fas fa-plus-circle'"></i>
@@ -39,7 +41,6 @@
       </form>
     </div>
 
-    <!-- Liste des catégories -->
     <h2 class="text-primary mb-4 d-flex align-items-center">
       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list me-2" viewBox="0 0 16 16">
         <path d="M3.5 8a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm-9-4a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zm4.5 0a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 1 0v1.5a.5.5 0 0 1-.5.5zM1 5.5A.5.5 0 0 1 1.5 5h13a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5v-.5zM1 10.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5v-.5z"/>
@@ -58,7 +59,10 @@
         <tr v-for="category in categories" :key="category.categorie_id">
           <td>{{ category.categorie_id }}</td>
           <td>{{ category.title }}</td>
-          <td>
+          <td class="text-center">
+            <button @click="viewCategoryDetails(category)" class="btn btn-outline-info me-2" title="Voir les détails">
+              <i class="fas fa-eye"></i>
+            </button>
             <button @click="editCategory(category)" class="btn btn-outline-success me-2" title="Modifier">
               <i class="fas fa-edit"></i>
             </button>
@@ -69,6 +73,22 @@
         </tr>
       </tbody>
     </table>
+
+    <div v-if="showCategoryDetails" class="category-details-overlay">
+      <div class="category-details-modal">
+        <div class="modal-header">
+          <h5>{{ $t('category_detail') }}</h5>
+          <button type="button" class="btn-close" @click="closeCategoryDetails"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>ID:</strong> {{ selectedCategory.categorie_id }}</p>
+          <p><strong>Nom:</strong> {{ selectedCategory.title }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" @click="closeCategoryDetails">Fermer</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,6 +103,9 @@ const successMessage = ref('');
 const errorMessage = ref('');
 const isEditing = ref(false);
 const editingCategoryId = ref(null);
+const selectedCategory = ref({}); 
+const showCategoryDetails = ref(false); 
+const showForm = ref(false); 
 
 const fetchCategories = async () => {
   await categoryStore.fetchCategories();
@@ -96,9 +119,12 @@ const handleAddCategory = async () => {
     errorMessage.value = '';
     resetForm();
     await fetchCategories();
+    clearMessages();
+    showForm.value = false; // Masquer le formulaire après l'ajout
   } catch (error) {
     errorMessage.value = 'Erreur lors de l\'ajout de la catégorie.';
     successMessage.value = '';
+    clearMessages();
   }
 };
 
@@ -106,6 +132,7 @@ const editCategory = (category) => {
   newCategory.value = { ...category };
   isEditing.value = true;
   editingCategoryId.value = category.categorie_id;
+  showForm.value = true; // Afficher le formulaire lors de la modification
 };
 
 const handleUpdateCategory = async () => {
@@ -115,28 +142,35 @@ const handleUpdateCategory = async () => {
     errorMessage.value = '';
     resetForm();
     await fetchCategories();
+    clearMessages();
+    showForm.value = false; // Masquer le formulaire après la mise à jour
   } catch (error) {
     errorMessage.value = 'Erreur lors de la mise à jour de la catégorie.';
     successMessage.value = '';
+    clearMessages();
   }
 };
 
-const deleteCategory = async (id) => {
+const deleteCategory = async (categoryId) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')) {
     try {
-      await categoryStore.deleteCategory(id);
+      await categoryStore.deleteCategory(categoryId);
       successMessage.value = 'Catégorie supprimée avec succès!';
       errorMessage.value = '';
       await fetchCategories();
+      clearMessages();
     } catch (error) {
       errorMessage.value = 'Erreur lors de la suppression de la catégorie.';
       successMessage.value = '';
+      clearMessages();
     }
   }
 };
 
 const cancelEdit = () => {
   resetForm();
+  isEditing.value = false;
+  showForm.value = false; // Masquer le formulaire en cas d'annulation
 };
 
 const resetForm = () => {
@@ -145,32 +179,75 @@ const resetForm = () => {
   editingCategoryId.value = null;
 };
 
-onMounted(fetchCategories);
+const clearMessages = () => {
+  setTimeout(() => {
+    successMessage.value = '';
+    errorMessage.value = '';
+  }, 3000);
+};
+
+const viewCategoryDetails = (category) => {
+  selectedCategory.value = { ...category };
+  showCategoryDetails.value = true;
+};
+
+const closeCategoryDetails = () => {
+  selectedCategory.value = {};
+  showCategoryDetails.value = false;
+};
+
+onMounted(async () => {
+  await fetchCategories();
+});
 </script>
 
 <style scoped>
-.form-actions {
-  margin-top: 1rem;
+.category-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.category-details-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-header, .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 10px 0;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
-.table {
-  margin-top: 20px;
-}
-.category-list-container {
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-.form-actions .btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+
+.btn {
+  margin-top: 20px; /* Augmente l'espace entre le bouton et les éléments autour */
 }
 
 .table {
@@ -178,7 +255,4 @@ onMounted(fetchCategories);
   margin: auto;
 }
 
-input {
-  width: 40%;
-}
 </style>

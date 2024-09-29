@@ -28,5 +28,7 @@
     "category_list": "List Des Categories",
     "category_name": "Nom de la Categorie",
     "ajout_recette": "Ajouter une nouvelle recette",
-    "charge_recip": "Chargement des recette..."
+    "charge_recip": "Chargement des recette...",
+    "category_detail":"Détails de la categorie",
+    "ajout_category": "ajouter une categorie"
 }

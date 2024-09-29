@@ -21,11 +21,11 @@
                 <i class="fas fa-home"></i> {{ $t("home") }}
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link class="nav-link" to="/add-recipe">
                 <i class="fas fa-plus-circle"></i> {{ $t("add_recipe") }}
               </router-link>
-            </li>
+            </li> -->
             <li class="nav-item">
               <router-link class="nav-link" to="/recipe-list">
                 <i class="fas fa-list"></i> {{ $t("recipe_list") }}
