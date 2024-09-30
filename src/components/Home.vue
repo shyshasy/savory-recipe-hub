@@ -11,7 +11,8 @@
     <div id="recipeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="/images/Des-recettes-de-cuisine-pour-une-alimentation-equilibree.jpeg" class="d-block w-100 recipe-img" alt="Recette 1">
+          <img src="/images/Maffè.jpg" class="d-block w-100 recipe-img" alt="Recette 1">
+      
         </div>
         <div class="carousel-item">
           <img src="/images/lazane.jpeg" class="d-block w-100 recipe-img" alt="Recette 2">
@@ -52,20 +53,23 @@ export default {
 }
 
 .recipe-img {
-  height: 300px; 
-  object-fit: cover; /* Changement de `contain` à `cover` pour remplir l'espace */
-  width: 100%;
-  border-radius: 12px; 
+  height: 400px; /* Hauteur augmentée pour les images */
+  width: 400px; /* Largeur augmentée pour un effet ovale plus prononcé */
+  object-fit: cover; /* Remplissage de l'espace avec les proportions d'image */
+  border-radius: 50%; /* Arrondir les coins pour un effet ovale */
   background-color: #f8f9fa; 
-  transition: transform 0.3s ease; /* Effet de transition */
+  transition: transform 0.3s ease, border 0.3s ease; /* Effet de transition */
+  border: 5px solid transparent; /* Bordure transparente par défaut */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Ombre autour de l'image */
 }
 
 .recipe-img:hover {
   transform: scale(1.05); /* Effet d'agrandissement au survol */
+  border: 5px solid #ffc107; /* Bordure dorée au survol */
 }
 
 .carousel-inner {
-  max-height: 300px; 
+  max-height: 400px; /* Hauteur maximale pour le carrousel */
 }
 
 .carousel-control-prev-icon,
