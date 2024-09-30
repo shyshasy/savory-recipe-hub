@@ -30,5 +30,6 @@
     "ajout_recette": "Ajouter une nouvelle recette",
     "charge_recip": "Chargement des recette...",
     "category_detail":"Détails de la categorie",
-    "ajout_category": "ajouter une categorie"
+    "ajout_category": "ajouter une categorie",
+    "selectType": "Selectioner le type"
 }

@@ -17,9 +17,9 @@
         <label for="type">{{ $t('type') }}</label>
         <select v-model="recipe.type" id="type" class="form-control" required>
           <option value="" disabled>{{ $t('selectType') }}</option>
-          <option>{{ $t('appetizer') }}</option>
-          <option>{{ $t('mainCourse') }}</option>
-          <option>{{ $t('dessert') }}</option>
+          <option value="appetizer">{{ $t('appetizer') }}</option>
+          <option value="mainCourse">{{ $t('mainCourse') }}</option>
+          <option value="dessert">{{ $t('dessert') }}</option>
         </select>
       </div>
 
@@ -27,7 +27,7 @@
         <label for="category">{{ $t('category') }}</label>
         <select v-model="recipe.category" id="category" class="form-control" required>
           <option value="" disabled>Choisissez une catégorie</option>
-          <option v-for="category in categories" :key="category.categorie_id" :value="category.name">
+          <option v-for="category in categories" :key="category.categorie_id" :value="category.title">
             {{ category.title }}
           </option>
         </select>
@@ -72,6 +72,7 @@ onMounted(async () => {
 
   const recipeId = route.params.id;
   const existingRecipe = recipeStore.getRecipeById(Number(recipeId));
+  
   if (existingRecipe) {
     recipe.value = { ...existingRecipe };
   } else {
@@ -82,11 +83,11 @@ onMounted(async () => {
 async function handleEditRecipe() {
   if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.category) {
     try {
-      await recipeStore.updateRecipe(recipe.value); 
+      await recipeStore.updateRecipe(recipe.value);
       successMessage.value = 'Recette mise à jour avec succès !';
       errorMessage.value = ''; 
       setTimeout(() => {
-        router.push({ name: 'recipe-list' }); 
+        router.push({ name: 'recipe-list' });
       }, 2000);
     } catch (error) {
       errorMessage.value = 'Erreur lors de la mise à jour de la recette.';
