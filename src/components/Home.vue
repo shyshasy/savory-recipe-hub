@@ -47,29 +47,29 @@ export default {
 
 <style scoped>
 .container {
-  background-color: #f0f8ff; /* Couleur de fond douce */
+  background-color: #f0f8ff; 
   border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre plus douce */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .recipe-img {
-  height: 400px; /* Hauteur augmentée pour les images */
-  width: 400px; /* Largeur augmentée pour un effet ovale plus prononcé */
-  object-fit: cover; /* Remplissage de l'espace avec les proportions d'image */
-  border-radius: 50%; /* Arrondir les coins pour un effet ovale */
+  height: 400px; 
+  width: 400px; 
+  object-fit: cover; 
+  border-radius: 50%; 
   background-color: #f8f9fa; 
-  transition: transform 0.3s ease, border 0.3s ease; /* Effet de transition */
-  border: 5px solid transparent; /* Bordure transparente par défaut */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Ombre autour de l'image */
+  transition: transform 0.3s ease, border 0.3s ease; 
+  border: 5px solid transparent; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
 }
 
 .recipe-img:hover {
-  transform: scale(1.05); /* Effet d'agrandissement au survol */
-  border: 5px solid #ffc107; /* Bordure dorée au survol */
+  transform: scale(1.05); 
+  border: 5px solid #ffc107; 
 }
 
 .carousel-inner {
-  max-height: 400px; /* Hauteur maximale pour le carrousel */
+  max-height: 400px; 
 }
 
 .carousel-control-prev-icon,
@@ -78,10 +78,10 @@ export default {
 }
 
 .btn {
-  transition: background-color 0.3s ease; /* Transition pour le changement de couleur */
+  transition: background-color 0.3s ease; 
 }
 
 .btn:hover {
-  opacity: 0.8; /* Réduction de l'opacité au survol */
+  opacity: 0.8; 
 }
 </style>

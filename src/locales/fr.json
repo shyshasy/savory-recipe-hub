@@ -31,5 +31,13 @@
     "charge_recip": "Chargement des recette...",
     "category_detail":"Détails de la categorie",
     "ajout_category": "ajouter une categorie",
-    "selectType": "Selectioner le type"
+    "selectType": "Selectioner le type",
+    "search_recipe": " Rechercher une recette...",
+    "ingredint": "Ingrédients :",
+    "chose_type": "Choisissez un type",
+    "list_ingredient":"Listez les ingrédients séparés par des virgules",
+    "enter_title":"Entrez le titre de la recette",
+    "chose_category":"Choisissez une catégorie",
+    "nom_categorie":"Entrez le nom de la catégorie"
+    
 }

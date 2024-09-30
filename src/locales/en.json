@@ -30,6 +30,13 @@
      "recipe_list_title": "Recipe List",
      "charge_recip": "Rcipes chargement...",
      "category_detail": "Category details",
-     "ajout_category": "add category"
+     "ajout_category": "add category",
+     "search_recipe":"Search a recipe",
+     "ingredint": "ingredients",
+     "chose_type": "Choose a type",
+     "list_ingredient":"List the ingredients separated by commas",
+     "enter_title": "Enter the title of the recipe",
+     "chose_category": "Choose a type ",
+     "nom_categorie": "Enter the category name"
     
 }

@@ -13,7 +13,7 @@
             type="text" 
             id="categoryName" 
             class="form-control" 
-            placeholder="Entrez le nom de la catégorie" 
+            :placeholder="$t('nom_categorie')" 
             required 
           />
         </div>

@@ -24,7 +24,7 @@
     <input
       type="text"
       v-model="searchQuery"
-      placeholder="Rechercher une recette..."
+      :placeholder="$t('search_recipe') "
       class="form-control mb-4 search-input"
     />
 
