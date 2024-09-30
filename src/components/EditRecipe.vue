@@ -1,99 +1,130 @@
 <template>
   <div class="form-container">
-    <h2>{{ $t('editRecipe') }}</h2>
-    
+    <h2>{{ $t("editRecipe") }}</h2>
+    <div v-if="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
     <form @submit.prevent="handleEditRecipe" class="recipe-form">
       <div class="form-group">
-        <label for="title">{{ $t('title') }}</label>
-        <input v-model="recipe.title" type="text" id="title" class="form-control" placeholder="title" required />
+        <label for="title">{{ $t("title") }}</label>
+        <input
+          v-model="recipe.title"
+          type="text"
+          id="title"
+          class="form-control"
+          placeholder="title"
+          required
+        />
       </div>
 
       <div class="form-group">
-        <label for="ingredients">{{ $t('ingredients') }}</label>
-        <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" rows="4" placeholder="ingredients" required></textarea>
+        <label for="ingredients">{{ $t("ingredients") }}</label>
+        <textarea
+          v-model="recipe.ingredients"
+          id="ingredients"
+          class="form-control"
+          rows="4"
+          placeholder="ingredients"
+          required
+        ></textarea>
       </div>
 
       <div class="form-group">
-        <label for="type">{{ $t('type') }}</label>
+        <label for="type">{{ $t("type") }}</label>
         <select v-model="recipe.type" id="type" class="form-control" required>
-          <option value="" disabled>{{ $t('selectType') }}</option>
-          <option value="appetizer">{{ $t('appetizer') }}</option>
-          <option value="mainCourse">{{ $t('mainCourse') }}</option>
-          <option value="dessert">{{ $t('dessert') }}</option>
+          <option value="" disabled>{{ $t("selectType") }}</option>
+          <option value="appetizer">{{ $t("appetizer") }}</option>
+          <option value="mainCourse">{{ $t("mainCourse") }}</option>
+          <option value="dessert">{{ $t("dessert") }}</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="category">{{ $t('category') }}</label>
-        <select v-model="recipe.category" id="category" class="form-control" required>
+        <label for="category">{{ $t("category") }}</label>
+        <select
+          v-model="recipe.category"
+          id="category"
+          class="form-control"
+          required
+        >
           <option value="" disabled>Choisissez une catégorie</option>
-          <option v-for="category in categories" :key="category.categorie_id" :value="category.title">
+          <option
+            v-for="category in categories"
+            :key="category.categorie_id"
+            :value="category.title"
+          >
             {{ category.title }}
           </option>
         </select>
       </div>
 
-      <button type="submit" class="btn btn-primary">{{ $t('editButton') }}</button>
-
-      <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
-      <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <button type="submit" class="btn btn-primary">
+        {{ $t("editButton") }}
+      </button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRecipeStore } from '../stores/recipeStore';
-import { useCategoryStore } from '../stores/categoryStore';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, onMounted } from "vue";
+import { useRecipeStore } from "../stores/recipeStore";
+import { useCategoryStore } from "../stores/categoryStore";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
 const recipeStore = useRecipeStore();
 const categoryStore = useCategoryStore();
 const recipe = ref({
-  id: null, 
-  title: '',
-  ingredients: '',
-  type: '',
-  category: ''
+  id: null,
+  title: "",
+  ingredients: "",
+  type: "",
+  category: "",
 });
 const categories = ref([]);
-const successMessage = ref('');
-const errorMessage = ref('');
+const successMessage = ref("");
+const errorMessage = ref("");
 
 onMounted(async () => {
   try {
     await categoryStore.fetchCategories();
     categories.value = categoryStore.categories;
   } catch (error) {
-    errorMessage.value = 'Erreur lors du chargement des catégories.';
+    errorMessage.value = "Erreur lors du chargement des catégories.";
   }
 
   const recipeId = route.params.id;
   const existingRecipe = recipeStore.getRecipeById(Number(recipeId));
-  
+
   if (existingRecipe) {
     recipe.value = { ...existingRecipe };
   } else {
-    errorMessage.value = 'Recette introuvable.';
+    errorMessage.value = "Recette introuvable.";
   }
 });
 
 async function handleEditRecipe() {
-  if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.category) {
+  if (
+    recipe.value.title &&
+    recipe.value.ingredients &&
+    recipe.value.type &&
+    recipe.value.category
+  ) {
     try {
       await recipeStore.updateRecipe(recipe.value);
-      successMessage.value = 'Recette mise à jour avec succès !';
-      errorMessage.value = ''; 
+      successMessage.value = "Recette mise à jour avec succès !";
+      errorMessage.value = "";
       setTimeout(() => {
-        router.push({ name: 'recipe-list' });
+        router.push({ name: "recipe-list" });
       }, 2000);
     } catch (error) {
-      errorMessage.value = 'Erreur lors de la mise à jour de la recette.';
+      errorMessage.value = "Erreur lors de la mise à jour de la recette.";
     }
   } else {
-    errorMessage.value = 'Veuillez remplir tous les champs obligatoires.';
+    errorMessage.value = "Veuillez remplir tous les champs obligatoires.";
   }
 }
 </script>
@@ -110,7 +141,7 @@ async function handleEditRecipe() {
 
 h2 {
   text-align: center;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;

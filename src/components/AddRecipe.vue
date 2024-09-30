@@ -2,21 +2,24 @@
   <div class="form-container">
     <h2>{{ $t('ajout_recette') }}</h2>
 
+    <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
     <form @submit.prevent="handleAddRecipe" class="recipe-form">
       <div class="form-group">
         <label for="title">Titre :</label>
-        <input v-model="recipe.title" type="text" id="title" class="form-control" placeholder="Entrez le titre de la recette" required />
+        <input v-model="recipe.title" type="text" id="title" class="form-control" :placeholder="$t('enter_title')" required />
       </div>
 
       <div class="form-group">
-        <label for="ingredients">Ingrédients :</label>
-        <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" placeholder="Listez les ingrédients séparés par des virgules" required></textarea>
+        <label for="ingredients">{{ $t('ingredint') }}</label>
+        <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" :placeholder="$t('list_ingredient')" required></textarea>
       </div>
 
       <div class="form-group">
         <label for="type">Type :</label>
         <select v-model="recipe.type" id="type" class="form-control" required>
-          <option value="" disabled>Choisissez un type</option>
+          <option value="" disabled>{{ $t('chose_type') }}</option>
           <option value="Dessert">Dessert</option>
           <option value="Main Course">Plat principal</option>
           <option value="Appetizer">Entrée</option>
@@ -27,7 +30,7 @@
       <div class="form-group">
         <label for="category">Catégorie :</label>
         <select v-model="recipe.id_categorie" id="category" class="form-control" required>
-          <option value="" disabled>Choisissez une catégorie</option>
+          <option value="" disabled>{{ $t('chose_category') }}</option>
           <option v-for="category in categories" :key="category.categorie_id" :value="category.categorie_id">
             {{ category.title }} 
           </option>
@@ -35,9 +38,6 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Ajouter la recette</button>
-
-      <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-      <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
     </form>
   </div>
 </template>
@@ -97,7 +97,6 @@ const handleAddRecipe = () => {
     errorMessage.value = 'Veuillez remplir tous les champs obligatoires.';
   }
 };
-
 
 onMounted(fetchCategories);
 </script>
