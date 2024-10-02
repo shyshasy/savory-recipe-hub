@@ -32,11 +32,6 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 npm run dev
 ````
 
-**Accédez à l'application à**
-
-http://localhost:5173
-
-
 ## Fonctionnalités
 
 - **Ajouter des recettes** : Enregistrez de nouvelles recettes avec des informations détaillées.
