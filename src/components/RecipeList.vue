@@ -18,18 +18,20 @@
 
     <!-- Bouton pour ajouter une nouvelle recette -->
     <router-link to="/add-recipe" class="btn btn-primary mb-3">
-      <i class="bi bi-plus-circle"></i> {{ $t('add_recipe') }}
+      <i class="bi bi-plus-circle"></i> {{ $t("add_recipe") }}
     </router-link>
 
     <input
       type="text"
       v-model="searchQuery"
-      :placeholder="$t('search_recipe') "
+      :placeholder="$t('search_recipe')"
       class="form-control mb-4 search-input"
     />
 
     <div v-if="loading" class="alert alert-info">{{ $t("charge_recip") }}</div>
-
+    <div v-if="successMessage" class="mt-4 alert alert-success">
+      {{ successMessage }}
+    </div>
     <table
       class="table table-bordered"
       v-if="!loading && filteredRecipes.length"
@@ -50,7 +52,7 @@
           <td>{{ recipe.type }}</td>
           <td>{{ getCategoryTitle(recipe.id_categorie) }}</td>
           <!-- Afficher le titre de la catégorie -->
-          <td>
+          <td class="text-center">
             <router-link
               :to="{ name: 'recipe-details', params: { id: recipe.id } }"
               class="btn btn-outline-info me-2"
@@ -80,11 +82,7 @@
     </table>
 
     <div v-if="!loading && !filteredRecipes.length" class="alert alert-warning">
-      Aucune recette ne correspond à votre recherche.
-    </div>
-
-    <div v-if="successMessage" class="mt-4 alert alert-success">
-      {{ successMessage }}
+      {{ $t("Aucune_correspond") }}
     </div>
   </div>
 </template>
@@ -93,6 +91,9 @@
 import { ref, computed, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipeStore";
 import { useCategoryStore } from "../stores/categoryStore";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n(); 
 
 const recipeStore = useRecipeStore();
 const categoryStore = useCategoryStore();
@@ -119,24 +120,25 @@ const getCategoryTitle = (categoryId) => {
   const category = categories.value.find(
     (cat) => cat.categorie_id === categoryId
   );
-  return category ? category.title : "Catégorie inconnue";
+  return category ? category.title : t("unknownCategory"); // Utiliser $t pour traduire
 };
 
 const handleDeleteRecipe = async (id) => {
-  if (confirm("Êtes-vous sûr de vouloir supprimer cette recette ?")) {
+  if (confirm(t("confirmDelete"))) { // Utiliser $t pour traduire
     try {
       await recipeStore.deleteRecipe(id);
-      successMessage.value = "Recette supprimée avec succès";
+      successMessage.value = t("successDelete"); // Utiliser $t pour traduire
       setTimeout(() => {
         successMessage.value = "";
       }, 3000);
     } catch (error) {
-      console.error("Erreur lors de la suppression :", error);
-      alert("Erreur lors de la suppression de la recette.");
+      console.error(t("errorDelete"), error); // Utiliser $t pour traduire
+      alert(t("errorDelete")); // Utiliser $t pour traduire
     }
   }
 };
 </script>
+
 
 <style>
 .search-input {

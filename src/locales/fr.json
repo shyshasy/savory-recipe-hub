@@ -38,6 +38,18 @@
     "list_ingredient":"Listez les ingrédients séparés par des virgules",
     "enter_title":"Entrez le titre de la recette",
     "chose_category":"Choisissez une catégorie",
-    "nom_categorie":"Entrez le nom de la catégorie"
+    "nom_categorie":"Entrez le nom de la catégorie",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette recette ?",
+    "successDelete": "Recette supprimée avec succès",
+    "errorDelete": "Erreur lors de la suppression de la recette.",
+    "unknownCategory": "Catégorie inconnue",
+    "Aucune_correspond": "Aucune recette ne correspond à votre recherche.",
+    "main_course": "Plat principal",
+    "appetizer": "Entrée",
+    "beverage": "Boisson",
+    "category": "Catégorie",
+    "recipe_added_success": "Recette ajoutée avec succès !",
+    "error_add_recipe": "Erreur lors de l'ajout de la recette. Veuillez réessayer."
+
     
 }

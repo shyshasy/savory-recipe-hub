@@ -10,7 +10,7 @@
           <label for="categoryName">{{$t('category_name')}}</label>
           <input 
             v-model="newCategory.title" 
-            type="text" 
+            type="text"   
             id="categoryName" 
             class="form-control" 
             :placeholder="$t('nom_categorie')" 

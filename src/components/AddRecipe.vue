@@ -7,28 +7,28 @@
 
     <form @submit.prevent="handleAddRecipe" class="recipe-form">
       <div class="form-group">
-        <label for="title">Titre :</label>
+        <label for="title">{{ $t('titre') }} :</label>
         <input v-model="recipe.title" type="text" id="title" class="form-control" :placeholder="$t('enter_title')" required />
       </div>
 
       <div class="form-group">
-        <label for="ingredients">{{ $t('ingredint') }}</label>
+        <label for="ingredients">{{ $t('ingredients') }}</label>
         <textarea v-model="recipe.ingredients" id="ingredients" class="form-control" :placeholder="$t('list_ingredient')" required></textarea>
       </div>
 
       <div class="form-group">
-        <label for="type">Type :</label>
+        <label for="type">{{ $t('type') }} :</label>
         <select v-model="recipe.type" id="type" class="form-control" required>
           <option value="" disabled>{{ $t('chose_type') }}</option>
-          <option value="Dessert">Dessert</option>
-          <option value="Main Course">Plat principal</option>
-          <option value="Appetizer">Entrée</option>
-          <option value="Beverage">Boisson</option>
+          <option value="Dessert">{{ $t('dessert') }}</option>
+          <option value="Main Course">{{ $t('main_course') }}</option>
+          <option value="Appetizer">{{ $t('appetizer') }}</option>
+          <option value="Beverage">{{ $t('beverage') }}</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="category">Catégorie :</label>
+        <label for="category">{{ $t('category') }} :</label>
         <select v-model="recipe.id_categorie" id="category" class="form-control" required>
           <option value="" disabled>{{ $t('chose_category') }}</option>
           <option v-for="category in categories" :key="category.categorie_id" :value="category.categorie_id">
@@ -37,7 +37,7 @@
         </select>
       </div>
 
-      <button type="submit" class="btn btn-primary">Ajouter la recette</button>
+      <button type="submit" class="btn btn-primary">{{ $t('add_recipe') }}</button>
     </form>
   </div>
 </template>
@@ -47,6 +47,9 @@ import { ref, onMounted } from 'vue';
 import { useRecipeStore } from '../stores/recipeStore';
 import { useCategoryStore } from '../stores/categoryStore'; 
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n(); // Utilisation de i18n pour la traduction
 
 const recipeStore = useRecipeStore();
 const categoryStore = useCategoryStore(); 
@@ -71,30 +74,33 @@ const fetchCategories = async () => {
 const handleAddRecipe = () => {
   if (recipe.value.title && recipe.value.ingredients && recipe.value.type && recipe.value.id_categorie) {
     const recipeToSubmit = { ...recipe.value };
-    console.log("Données à envoyer à l'API :", recipeToSubmit);
+    console.log(t("data_to_be_sent"), recipeToSubmit); // Utilisation de t() pour la traduction
+    
     recipeStore.addRecipe(recipeToSubmit)
       .then(() => {
-        successMessage.value = 'Recette ajoutée avec succès !';
+        successMessage.value = t('recipe_added_success'); // Traduction du message de succès
         errorMessage.value = '';
+
         setTimeout(() => {
           router.push({ name: 'recipe-list' });
         }, 1500);
+
         recipe.value = { title: '', ingredients: '', type: '', id_categorie: '' };
       })
       .catch((error) => {
         if (error.response) {
-          console.error("Erreur lors de l'ajout de la recette :", error.response.data);
-          errorMessage.value = 'Erreur lors de l\'ajout de la recette. ' + (error.response.data.message || 'Veuillez réessayer.');
+          console.error(t("error_adding_recipe"), error.response.data);
+          errorMessage.value = t('error_adding_recipe') + ' ' + (error.response.data.message || t('please_try_again'));
         } else if (error.request) {
-          console.error("Aucune réponse de l'API :", error.request);
-          errorMessage.value = 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion ou réessayer plus tard.';
+          console.error(t("no_response_from_api"), error.request);
+          errorMessage.value = t('server_connection_failed');
         } else {
-          console.error("Erreur lors de la configuration de la requête :", error.message);
-          errorMessage.value = 'Erreur interne. Veuillez réessayer.';
+          console.error(t("error_request_setup"), error.message);
+          errorMessage.value = t('internal_error');
         }
       });
   } else {
-    errorMessage.value = 'Veuillez remplir tous les champs obligatoires.';
+    errorMessage.value = t('fill_required_fields'); // Message d'erreur traduit
   }
 };
 
