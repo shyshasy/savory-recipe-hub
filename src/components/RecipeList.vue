@@ -1,12 +1,12 @@
 <template>
   <div class="container mt-5">
-    <h2 class="text-primary mb-4">
+    <h2 class="text-primary mb-4 d-flex align-items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="50"
         height="50"
         fill="currentColor"
-        class="bi bi-list"
+        class="bi bi-list me-3"
         viewBox="0 0 16 16"
       >
         <path
@@ -16,8 +16,7 @@
       {{ $t("recipe_list_title") }}
     </h2>
 
-    <!-- Bouton pour ajouter une nouvelle recette -->
-    <router-link to="/add-recipe" class="btn btn-primary mb-3">
+    <router-link to="/add-recipe" class="btn btn-primary mb-3 btn-custom">
       <i class="bi bi-plus-circle"></i> {{ $t("add_recipe") }}
     </router-link>
 
@@ -32,11 +31,12 @@
     <div v-if="successMessage" class="mt-4 alert alert-success">
       {{ successMessage }}
     </div>
+
     <table
-      class="table table-bordered"
+      class="table table-bordered table-hover table-custom"
       v-if="!loading && filteredRecipes.length"
     >
-      <thead>
+      <thead class="table-primary">
         <tr>
           <th>{{ $t("title") }}</th>
           <th>{{ $t("ingredients") }}</th>
@@ -51,7 +51,6 @@
           <td>{{ recipe.ingredients }}</td>
           <td>{{ recipe.type }}</td>
           <td>{{ getCategoryTitle(recipe.id_categorie) }}</td>
-          <!-- Afficher le titre de la catégorie -->
           <td class="text-center">
             <router-link
               :to="{ name: 'recipe-details', params: { id: recipe.id } }"
@@ -86,6 +85,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
@@ -140,8 +140,81 @@ const handleDeleteRecipe = async (id) => {
 </script>
 
 
-<style>
+<style scoped>
+.container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+}
+
+.btn-custom {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.btn-custom:hover {
+  background-color: #0056b3;
+}
+
 .search-input {
-  max-width: 300px;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  max-width: 400px;
+  font-size: 1rem;
+  margin: 0 auto;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #007bff;
+}
+
+.table-custom {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.alert {
+  border-radius: 5px;
+}
+
+.btn-outline-info:hover {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 </style>
