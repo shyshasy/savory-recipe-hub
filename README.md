@@ -1,7 +1,7 @@
-# Gestion-de-recette - Application de Gestion de Recettes #
+# Savory Recipe Hub #
 
 
-Bienvenue sur **Gestion-de-recette - Application de Gestion de Recettes** ! Cette application vous permet de gérer vos recettes de cuisine préférées. Développée avec Vue.js 3, Pinia pour la gestion d'état, et Bootstrap pour le style, elle offre une expérience utilisateur fluide et moderne.
+Bienvenue sur **Savory Recipe Hub** ! Cette application vous permet de gérer vos recettes de cuisine préférées. Développée avec Vue.js 3, Pinia pour la gestion d'état, et Bootstrap pour le style, elle offre une expérience utilisateur fluide et moderne.
 
 
 ## Prérequis
@@ -16,9 +16,12 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 1. **Cloner le dépôt**
 
    ```bash
-   git clone https://github.com/Mamoudou12/gestion_recipe
-   cd gestion_recipe
+   git clone https://github.com/shyshasy/savory-recipe-hub.git
    ```
+
+   ```bash
+   cd savory-recipe-hub
+   ````
 
   # Installer les dépendance#
 
@@ -47,4 +50,4 @@ npm run dev
 
  [Aichetou Taher Sy](https://github.com/shyshasy)
 
- [Mamadou Ba](https://github.com/Mamoudou12/gestion_recipe)
+ 
