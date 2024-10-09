@@ -109,68 +109,70 @@ onMounted(fetchCategories);
 
 <style scoped>
 .form-container {
-  max-width: 500px;
+  max-width: 600px; /* Augmentation de la largeur maximale */
   margin: 30px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+  padding: 25px; /* Ajout de padding */
+  background-color: #f0f4f8; /* Couleur de fond douce */
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre plus douce */
 }
 
 h2 {
   text-align: center;
-  font-family: 'Arial', sans-serif;
-  font-size: 24px;
+  font-family: 'Helvetica Neue', sans-serif; /* Utilisation d'une police moderne */
+  font-size: 26px; /* Légère augmentation de la taille */
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Ajustement de la marge */
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px; /* Espacement plus important */
 }
 
 label {
-  font-weight: bold;
+  font-weight: 600; /* Augmentation du poids de la police */
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px; /* Ajustement de la marge */
   color: #555;
 }
 
 .form-control {
   width: 100%;
-  padding: 10px;
+  padding: 12px; /* Augmentation du padding */
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 1px solid #ccc; /* Couleur de bordure plus douce */
+  border-radius: 8px; /* Arrondi plus prononcé */
   background-color: #fff;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Ajout de transitions */
 }
 
 .form-control:focus {
   border-color: #007bff;
   outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ombre portée au focus */
 }
 
 .btn {
   width: 100%;
-  padding: 10px;
-  font-size: 16px;
+  padding: 12px; /* Augmentation du padding */
+  font-size: 18px; /* Augmentation de la taille de la police */
   font-weight: bold;
-  background-color: #007bff;
+  background-color: #007bff; /* Couleur de fond principale */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Arrondi plus prononcé */
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Ajout de transitions */
 }
 
 .btn:hover {
   background-color: #0056b3;
+  transform: translateY(-2px); /* Effet de levée au survol */
 }
 
 .alert {
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 20px;
+  padding: 12px; /* Augmentation du padding */
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
